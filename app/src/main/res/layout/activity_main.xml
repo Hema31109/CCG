@@ -1,69 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.newtechs.locations.cg.MainActivity">
-<android.support.v7.widget.CardView
-    android:layout_width="300dp"
-    android:layout_height="60dp"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="10dp">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="share location"
-    android:textSize="30dp"
-    android:layout_marginTop="7dp"
-    android:layout_marginLeft="25dp"
-    android:id="@+id/shareText"
-    />
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/shareText"
-
+    tools:context="com.codeworks.project.splashscreen.MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image"
+        android:src="@drawable/plus"
         />
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearest Location"
-            android:textSize="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="7dp"/>
-    </android.support.v7.widget.CardView>
 
-<android.support.v7.widget.CardView
-android:layout_width="300dp"
-android:layout_height="60dp"
-app:cardElevation="10dp"
-app:cardCornerRadius="10dp"
-android:layout_centerHorizontal="true"
-android:layout_marginTop="190dp">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="User Location"
-    android:textSize="30dp"
-    android:layout_marginLeft="55dp"
-    android:layout_marginTop="7dp"/>
-</android.support.v7.widget.CardView>
-</RelativeLayout>
+   </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codeworks.project.splashscreen.splashscreen">
+<android.support.v7.widget.CardView
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="20dp"
+    android:id="@+id/police"
+    android:layout_marginTop="75dp"
+    android:layout_centerHorizontal="true"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/police"/>
+</android.support.v7.widget.CardView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/policeid"
+        android:text="police
+"        android:textSize="25dp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="150dp"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/driver"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="20dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/driver"/>
+    </android.support.v7.widget.CardView>
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/driverid"
+         android:text="driver"
+         android:textSize="25dp"
+         android:textColor="@color/colorAccent"
+         android:layout_marginTop="350dp"
+         android:layout_marginLeft="35dp"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/user"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="250dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user"/>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/userid"
+            android:text="user"
+            android:textSize="25dp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="350dp"
+            android:layout_marginLeft="270dp"/>
+
+
+
+
+</RelativeLayout>
