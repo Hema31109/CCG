@@ -42,7 +42,9 @@
                 <action android:name="com.here.android.mpa.service"></action>
             </intent-filter>
         </service>
-
+<activity android:name=".Driver"></activity>
+<activity android:name=".splashscreen"></activity>
+        <activity android:name=".User"></activity>
     </application>
 
 </manifest>
