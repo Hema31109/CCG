@@ -42,6 +42,7 @@ private boolean paused = false;
 private PositioningManager positioningManager;
 private Map map;
 private GeoPosition gePosition;
+public static GeoCoordinate geoCoordinate;
 private DatabaseReference myRef,currentRef;
 private FirebaseDatabase database;
 TextView positiontext;
@@ -54,6 +55,7 @@ private ProgressDialog dialog;
             map.setCenter(geoPosition.getCoordinate(), Map.Animation.NONE);
             map.getPositionIndicator().setVisible(true);
             gePosition = geoPosition;
+            geoCoordinate = geoPosition.getCoordinate();
             positiontext.setVisibility(View.GONE);
 //            final GeoCoordinate coordinate = geoPosition.getCoordinate();
 //            myRef.addChildEventListener(new ChildEventListener() {
@@ -143,7 +145,7 @@ private ProgressDialog dialog;
         super.onResume();
         paused = false;
         if (positioningManager != null){
-            positioningManager.start(PositioningManager.LocationMethod.NETWORK);
+            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK);
         }
     }
 
@@ -172,7 +174,15 @@ private ProgressDialog dialog;
     }
 
     public void viewNearbyHospitals(View view) {
-
+        if (gePosition==null){
+            Toast.makeText(this, "Wait until current position is fetched.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        GeoCoordinate coordinate = gePosition.getCoordinate();
+        String locations = coordinate.getLatitude()+","+coordinate.getLongitude();
+        Intent intent = new Intent(this,NearbyPlacesActivity.class);
+        intent.putExtra("coordinates",locations);
+        startActivity(intent);
     }
 
     public void share(View view) {

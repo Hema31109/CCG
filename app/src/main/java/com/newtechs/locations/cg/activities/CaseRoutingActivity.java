@@ -59,6 +59,7 @@ GeoPosition position,userPosition;
 PositioningManager positioningManager;
 String vehicleNo;
 ProgressDialog dialog;
+public GeoCoordinate coordinatess;
 TextView routetext;
     private PositioningManager.OnPositionChangedListener onPositionChangedListener = new PositioningManager.OnPositionChangedListener() {
         @Override
@@ -66,6 +67,7 @@ TextView routetext;
            routetext.setVisibility(View.GONE);
             if (!paused){
                 map.setCenter(geoPosition.getCoordinate(), Map.Animation.NONE);
+                map.setZoomLevel(15);
                 map.getPositionIndicator().setVisible(true);
                 position = geoPosition;
                 coreRouter = new CoreRouter();
@@ -111,6 +113,7 @@ TextView routetext;
         if (vehicleNo.equalsIgnoreCase("0")) {
             getSupportActionBar().setTitle("Routing");
             findViewById(R.id.fab).setVisibility(View.GONE);
+            coordinatess = DriverLocationActivity.geoCoordinate;
         }
             else
             getSupportActionBar().setTitle("Routing - "+vehicleNo);
@@ -185,7 +188,7 @@ TextView routetext;
         super.onResume();
         paused = false;
         if (positioningManager != null){
-            positioningManager.start(PositioningManager.LocationMethod.NETWORK);
+            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK);
         }
     }
 

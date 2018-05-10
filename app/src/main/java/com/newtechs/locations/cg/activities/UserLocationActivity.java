@@ -97,7 +97,7 @@ private ProgressDialog dialog;
         super.onResume();
         paused = false;
         if (positioningManager != null){
-            positioningManager.start(PositioningManager.LocationMethod.NETWORK);
+            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK);
         }
     }
 
