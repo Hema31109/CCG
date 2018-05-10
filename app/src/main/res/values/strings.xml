@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">CG</string>
+    <string name="app_name">Share L</string>
     <string name="appid">qqLqWZhDd6rkJoTUNHSI</string>
     <string name="appcode">ZnA8s-QCV5XX3alRa5EHEQ</string>
     <string name="licensekey">DgdD5xUHfPR8xZv76cN7v70q1jgkthqraTcuZQhDrCsOY+jwf2wWW+oASzIrHAb+3qAz0IjtZrAylnezkjjcS2zvPT4mP7ni8pR0giZbLfE5hTpciL1QsqmBX3nBDq9uyDVguPFKceHh+kUFnTsJIjuqQfrJUikMGXlQ//7aC4+remuNpl/wTP7/OpLNgRP2t2b4Vd5PFxGV5RQSQOyJTayNgVLbbVQVMeqZg05plxq3pyrXj8wj1msgwLhW8RBmphcSrgZG6CqNjblffc9C4a676Z/DVEG6jkyVkUl0mZ8BhDhN3/ZezjtKmbNY3RshbicVT7MRabGe/Wh7OdTI/dsN44LfuXvLetPM/ubc6mBT4Xi/l9WvKEQr5JQtJ5kwVbYWgT7z1uUMpW4HAkrfY3T2W7L9RKJU0PAK6AEjqX4ISUI2EmxQ5bYUrYAGVX47kjMPc9YQEGzwRNvYbC8RsfinUDRoEVoRmzhTzwxAlpDuBouIkfiIDv39ioZ9OECSI4fQbLcwrkZVkCpcgWzGcU6MQNbIWuGsl8Go3LK9oiyQVLLpzP80Cy/m4N1770GRtLZW+QHUwY7PbeHn3PIYx7yLSRptnrtNc13EFRS9/KhJrWrl1Rvz+a3ToU71uhae9Lt25k8W9LOTparXUnwqQnChgkswqSL+293bmvTxuoU=</string>
+    <string name="verifiedtext">Verify</string>
+    <string name="gps_network_not_enabled">GPS NOT ENABLED</string>
+    <string name="Cancel">Cancel</string>
+    <string name="open_location_settings">Open Location Settings</string>
 </resources>

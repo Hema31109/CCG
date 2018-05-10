@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/customtoolbar" android:id="@+id/toolbar"/>
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Routing..."
+       android:textColor="@color/colorPrimary"
+       android:textSize="25sp"
+       android:layout_gravity="center"
+       android:id="@+id/routetext"
+    />
+    <fragment
+        android:layout_marginTop="?attr/actionBarSize"
+        class="com.here.android.mpa.mapping.MapFragment"
+        android:id="@+id/mapsfragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
+        android:onClick="updateVerifyInfo"
+        android:id="@+id/fab"
+        android:tooltipText="@string/verifiedtext"
+        android:src="@drawable/ic_done_black_24dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/estimatedtime"
+        android:text="Estimated Time: "
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"/>
+</android.support.design.widget.CoordinatorLayout>
