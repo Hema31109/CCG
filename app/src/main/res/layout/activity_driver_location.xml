@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/coordinator"
     android:layout_height="match_parent">
     <TextView
         android:layout_width="wrap_content"
@@ -55,8 +56,17 @@
         android:layout_height="wrap_content"
         app:fabSize="normal"
         android:onClick="searchUserLocation"
-        android:src="@drawable/ic_pageview_black_24dp"
+        android:src="@drawable/ic_format_list_bulleted_black_24dp"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="70dp"
+        android:layout_marginRight="10dp"/>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:onClick="searchTraffic"
+        android:src="@drawable/ic_traffic_black_24dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="130dp"
         android:layout_marginRight="10dp"/>
 </android.support.design.widget.CoordinatorLayout>

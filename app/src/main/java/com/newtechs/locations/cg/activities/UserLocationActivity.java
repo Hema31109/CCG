@@ -12,12 +12,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.GeoPosition;
+import com.here.android.mpa.common.LocationDataSourceHERE;
 import com.here.android.mpa.common.MapSettings;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.common.PositioningManager;
@@ -38,17 +40,19 @@ private Map map;
 private GeoPosition gePosition;
 private DatabaseReference myRef;
 private FirebaseDatabase database;
+private TextView positiontext;
+private LocationDataSourceHERE here;
 private ProgressDialog dialog;
     private PositioningManager.OnPositionChangedListener onPositionChangedListener = new PositioningManager.OnPositionChangedListener() {
     @Override
     public void onPositionUpdated(PositioningManager.LocationMethod locationMethod, GeoPosition geoPosition, boolean b) {
-        dialog.dismiss();
+        positiontext.setVisibility(View.GONE);
         if (!paused){
             map.setCenter(geoPosition.getCoordinate(), Map.Animation.NONE);
             map.getPositionIndicator().setVisible(true);
             gePosition = geoPosition;
         }else{
-            Log.e("UserLocationActivity","Paused is true");
+
         }
 
     }
@@ -66,6 +70,9 @@ private ProgressDialog dialog;
         dialog.setMessage("Loading...");
         dialog.setCancelable(false);
         dialog.show();
+        positiontext= findViewById(R.id.positiontext);
+        positiontext.bringToFront();
+        positiontext.invalidate();
         checkLocationServices();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(Constants.USERLOCATION_LIST_REFERENCE);
@@ -80,10 +87,25 @@ private ProgressDialog dialog;
             fragment.init(new OnEngineInitListener() {
                 @Override
                 public void onEngineInitializationCompleted(Error error) {
+                    dialog.dismiss();
                     if (error == Error.NONE) {
                         positioningManager = PositioningManager.getInstance();
                         positioningManager.addListener(new WeakReference<PositioningManager.OnPositionChangedListener>(onPositionChangedListener));
                         map = fragment.getMap();
+                        here = LocationDataSourceHERE.getInstance();
+                        if (here!=null){
+                            positioningManager = PositioningManager.getInstance();
+                            positioningManager.setDataSource(here);
+                            positioningManager.addListener(new WeakReference<PositioningManager.OnPositionChangedListener>(onPositionChangedListener));
+                            if (positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK_INDOOR)){
+                                Toast.makeText(UserLocationActivity.this, "Position Update Started!", Toast.LENGTH_SHORT).show();
+                                positiontext.setVisibility(View.VISIBLE);
+                            }else{
+                                Toast.makeText(UserLocationActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(UserLocationActivity.this, "Here Data Null!", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Log.e("UserLocationActivity", "Cannot Initialize MapFragment" + "\n" + error.getDetails());
                     }
@@ -97,7 +119,8 @@ private ProgressDialog dialog;
         super.onResume();
         paused = false;
         if (positioningManager != null){
-            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK);
+            if (!positioningManager.isActive())
+            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK_INDOOR);
         }
     }
 
@@ -127,7 +150,7 @@ private ProgressDialog dialog;
         data.verifiedtext = "NO";
         data.vehicleNo = "0";
         yRef.setValue(data);
-        Toast.makeText(this, "Location:"+gePosition, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Location Shared Successfully", Toast.LENGTH_LONG).show();
     }
     public void checkLocationServices(){
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);

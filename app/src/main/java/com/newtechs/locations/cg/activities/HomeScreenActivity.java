@@ -29,7 +29,8 @@ import java.util.List;
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     CardView police,driver,user;
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
-
+    public static int flag = 1;
+    public static String name = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         requestPermissions();
         checkLocationServices();
         if (!checkInternet()){
-            Snackbar.make(findViewById(R.id.coordinatorlayout),"Check Internet Connection!",Snackbar.LENGTH_LONG);
+            Snackbar.make(findViewById(R.id.coordinatorlayout),"Check Internet Connection!",Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -55,7 +56,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         switch(v.getId())
         {
             case R.id.police:
-                Intent intent = new Intent(HomeScreenActivity.this,CaseListActivity.class);
+                Intent intent = new Intent(HomeScreenActivity.this,PoliceLocationActivity.class);
                 intent.putExtra("flag",2);
                 startActivity(intent);
                 break;
@@ -156,5 +157,4 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         NetworkInfo info = manager.getActiveNetworkInfo();
         return info!=null && info.isAvailable() &&info.isConnected();
     }
-
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+<include layout="@layout/customtoolbar" android:id="@+id/toolbar"></include>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Routing..."
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:id="@+id/routetext"
+        />
+    <TextView
+        android:visibility="gone"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Will take a QUITE RIGHT in 100mts"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:layout_gravity="start"
+        android:padding="20dp"
+        android:layout_marginTop="60dp"
+        android:id="@+id/instructiontext"
+        />
+    <fragment
+        android:layout_marginTop="59dp"
+        class="com.here.android.mpa.mapping.MapFragment"
+        android:id="@+id/mapsfragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/estimatedtime"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"/>
+</android.support.design.widget.CoordinatorLayout>

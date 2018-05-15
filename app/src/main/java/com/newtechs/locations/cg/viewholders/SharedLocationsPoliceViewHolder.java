@@ -6,8 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.here.android.mpa.common.GeoCoordinate;
 import com.newtechs.locations.cg.R;
+import com.newtechs.locations.cg.activities.CaseListActivity;
 import com.newtechs.locations.cg.activities.CaseRoutingActivity;
+import com.newtechs.locations.cg.activities.PoliceLocationActivity;
+import com.newtechs.locations.cg.routing.MainActivity;
 import com.newtechs.locations.cg.utilities.VehicleData;
 
 /**
@@ -49,9 +53,18 @@ public class SharedLocationsPoliceViewHolder extends RecyclerView.ViewHolder imp
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(mContext,CaseRoutingActivity.class);
-        intent.putExtra("location",locationString);
-        intent.putExtra("vehicleno",vehicleNoString);
+        Intent intent=null;
+        if (CaseListActivity.route_flag==0) {
+            intent = new Intent(mContext, MainActivity.class);
+        }else{
+            intent = new Intent(mContext, CaseRoutingActivity.class);
+        }
+        GeoCoordinate g=PoliceLocationActivity.gePosition.getCoordinate();
+        intent.putExtra("userlocation",g.getLatitude()+","+g.getLongitude());
+        intent.putExtra("destinationlocation",locationString);
+        intent.putExtra("title",vehicleNoString);
+        intent.putExtra("distance"," ");
+        intent.putExtra("vno",vehicleNoString);
         mContext.startActivity(intent);
     }
 }

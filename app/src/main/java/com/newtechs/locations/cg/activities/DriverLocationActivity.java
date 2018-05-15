@@ -6,9 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,11 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.GeoPosition;
+import com.here.android.mpa.common.LocationDataSourceHERE;
 import com.here.android.mpa.common.MapSettings;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.common.PositioningManager;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
+import com.here.android.mpa.mapping.MapTrafficLayer;
+import com.here.android.mpa.mapping.TrafficEvent;
 import com.here.android.mpa.urbanmobility.Alert;
 import com.newtechs.locations.cg.R;
 import com.newtechs.locations.cg.utilities.Constants;
@@ -42,6 +48,7 @@ private boolean paused = false;
 private PositioningManager positioningManager;
 private Map map;
 private GeoPosition gePosition;
+private LocationDataSourceHERE here;
 public static GeoCoordinate geoCoordinate;
 private DatabaseReference myRef,currentRef;
 private FirebaseDatabase database;
@@ -57,43 +64,8 @@ private ProgressDialog dialog;
             gePosition = geoPosition;
             geoCoordinate = geoPosition.getCoordinate();
             positiontext.setVisibility(View.GONE);
-//            final GeoCoordinate coordinate = geoPosition.getCoordinate();
-//            myRef.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    for (DataSnapshot data : dataSnapshot.getChildren()){
-//                        VehicleData d =data.getValue(VehicleData.class);
-//                        if (d.vehicleNo.equalsIgnoreCase(("TN 23 "+Build.ID).substring(0,10))){
-//                            currentRef= data.getRef();
-//                            break;
-//                        }
-//                    }
-//                    currentRef.child("location").setValue(coordinate.getLatitude()+","+coordinate.getLongitude());
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//            currentRef.setValue(coordinate.getLatitude()+","+coordinate.getLongitude());
         }else{
-            Log.e("UserLocationActivity","Paused is true");
+
         }
 
     }
@@ -114,6 +86,9 @@ private ProgressDialog dialog;
         checkLocationServices();
         positiontext.bringToFront();
         positiontext.invalidate();
+        if (!checkInternet()){
+            Snackbar.make(findViewById(R.id.coordinatorlayout),"Check Internet Connection!",Snackbar.LENGTH_LONG).show();
+        }
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(Constants.EMERGENCY_VEHICLE_LIST_REFERENCE);
         fragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapsfragment);
@@ -131,6 +106,20 @@ private ProgressDialog dialog;
                         map = fragment.getMap();
                         positioningManager = PositioningManager.getInstance();
                         positioningManager.addListener(new WeakReference<PositioningManager.OnPositionChangedListener>(onPositionChangedListener));
+                        here = LocationDataSourceHERE.getInstance();
+                        if (here!=null){
+                            positioningManager = PositioningManager.getInstance();
+                            positioningManager.setDataSource(here);
+                            positioningManager.addListener(new WeakReference<PositioningManager.OnPositionChangedListener>(onPositionChangedListener));
+                            if (positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK_INDOOR)){
+                                Toast.makeText(DriverLocationActivity.this, "Position Update Started!", Toast.LENGTH_SHORT).show();
+                                positiontext.setVisibility(View.VISIBLE);
+                            }else{
+                                Toast.makeText(DriverLocationActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(DriverLocationActivity.this, "Here Data Null!", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Log.e("UserLocationActivity", "Cannot Initialize MapFragment" + "\n" + error.getDetails());
                     }
@@ -145,7 +134,8 @@ private ProgressDialog dialog;
         super.onResume();
         paused = false;
         if (positioningManager != null){
-            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK);
+            if (!positioningManager.isActive())
+            positioningManager.start(PositioningManager.LocationMethod.GPS_NETWORK_INDOOR);
         }
     }
 
@@ -194,7 +184,7 @@ private ProgressDialog dialog;
         String randvalue = Build.ID;
         data.vehicleNo = ("TN 23 "+randvalue).substring(0,10);
         yRef.setValue(data);
-        Toast.makeText(this, "Location:"+gePosition, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Location Shared Successfully", Toast.LENGTH_LONG).show();
     }
     public void checkLocationServices(){
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -241,4 +231,18 @@ private ProgressDialog dialog;
             d.show();
         }
     }
+
+    public void searchTraffic(View view) {
+        MapTrafficLayer layer = map.getMapTrafficLayer();
+        layer.setDisplayFilter(TrafficEvent.Severity.VERY_HIGH);
+        map.setTrafficInfoVisible(true);
+    }
+
+    public boolean checkInternet(){
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return info!=null && info.isAvailable() &&info.isConnected();
+    }
+
+
 }
